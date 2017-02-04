@@ -38,27 +38,23 @@ class Home extends Component {
           'view-enter': viewEntersAnim
         })}>
         <Jumbotron>
-          <h1>
-            Full ES2015 ReactJS + Bootstrap
-          </h1>
-          <h2>
-            with Hot Reload!!!
-          </h2>
-          <h2>
-            with React Router (SPA)
-          </h2>
-          <h1>
-            Starter
+          <h1 calssName='title'>
+            Generate your Star Wars Name
           </h1>
           <h1></h1>
           <p>
-            <Link
-              className="btn btn-success btn-lg"
-              to={'/about'}>
-              <i className="fa fa-info"></i>
-              &nbsp;
-              go to about
-            </Link>
+            <form className="form-inline">
+              <div className="form-group">
+                <label for="yourFirstName">Fist Name  </label>
+                <input type="text" className="form-control" id="yourFirstName" placeholder="Enter your first name"/>
+                <label for="yourLastName">Last Name</label>
+                <input type="text" className="form-control" id="yourLastName" placeholder="Enter your last name"/>
+                <button type="submit" className="btn btn-primary">
+                  <i className="fa fa-space-shuttle"></i>
+                  Generate
+                </button>
+              </div>
+            </form>
           </p>
         </Jumbotron>
       </div>
