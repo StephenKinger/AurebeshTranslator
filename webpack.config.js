@@ -14,6 +14,7 @@ const config = {
     path: assetsDir,
     filename: 'bundle.js'
   },
+  devtool: 'source-map',
   module: {
     loaders: [{
       test: /\.jsx?$/,
@@ -21,7 +22,8 @@ const config = {
       exclude: [nodeModulesDir]
     }, {
       test: /\.scss$/,
-      loader: 'style!css!postcss!sass'
+      loaders: [ "style", "css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]", "sass?sourceMap"]
+      //loader: 'style!css!postcss!sass'
     }, {
       test: /\.less$/,
       loader: 'style!css!postcss!less'

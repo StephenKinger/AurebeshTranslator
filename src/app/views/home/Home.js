@@ -30,6 +30,8 @@ class Home extends Component {
 
   render() {
     const { animated, viewEntersAnim } = this.state;
+    const styles = require('./home.style.scss');
+    console.log(styles.title);
     return(
       <div
         key="homeView"
@@ -38,18 +40,22 @@ class Home extends Component {
           'view-enter': viewEntersAnim
         })}>
         <Jumbotron>
-          <h1 calssName='title'>
+          <h1 className={styles.title}>
             Generate your Star Wars Name
           </h1>
           <h1></h1>
           <p>
-            <form className="form-inline">
-              <div className="form-group">
-                <label for="yourFirstName">Fist Name  </label>
-                <input type="text" className="form-control" id="yourFirstName" placeholder="Enter your first name"/>
+            <form className={styles.inputs+' form-inline'}>
+              <div className='form-group'>
+                <label for="yourFirstName">Fist Name</label>
+                <input type="text" className={styles.fields+' form-control'} id="yourFirstName" placeholder="Enter your first name"/>
+              </div>
+              <div className={styles.fields+' form-group'}>
                 <label for="yourLastName">Last Name</label>
-                <input type="text" className="form-control" id="yourLastName" placeholder="Enter your last name"/>
-                <button type="submit" className="btn btn-primary">
+                <input type="text" className={styles.fields+' form-control'} id="yourLastName" placeholder="Enter your last name"/>
+              </div>
+              <div className={styles.fields+' form-group'}>
+                <button type="submit" className='btn btn-primary'>
                   <i className="fa fa-space-shuttle"></i>
                   Generate
                 </button>

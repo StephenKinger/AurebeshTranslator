@@ -7,7 +7,7 @@ const assetsDir   = path.join(__dirname, 'public/assets');
 const vendorsDir  = path.join(__dirname, 'src/app/vendors');
 
 const config = {
-  devtool: 'cheap-module-source-map',
+  devtool: 'source-map',
   entry: [
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
@@ -36,7 +36,8 @@ const config = {
       include: path.join(__dirname, 'src/app')
     },  {
       test: /\.scss$/,
-      loader: 'style!css!postcss!sass'
+      loaders: [ "style", "css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]", "sass?sourceMap"]
+      //loader: 'style!css!postcss!sass'
     },  {
       test: /\.less$/,
       loader: 'style!css!postcss!less'
