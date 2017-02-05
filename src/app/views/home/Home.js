@@ -28,6 +28,16 @@ class Home extends Component {
     leaveHome();
   }
 
+  _handleValidSubmit(e) {
+    if (e) {
+     e.preventDefault();
+    }
+    let firstName = this.refs.yourFirstName.value;
+    let lastName = this.refs.yourLastName.value;
+    console.log("firstName:"+firstName);
+    console.log("lastName:"+lastName);
+  }
+
   render() {
     const { animated, viewEntersAnim } = this.state;
     const styles = require('./home.style.scss');
@@ -45,14 +55,14 @@ class Home extends Component {
           </h1>
           <h1></h1>
           <p>
-            <form className={styles.inputs+' form-inline'}>
+            <form className={styles.inputs+' form-inline'} onSubmit={this._handleValidSubmit.bind(this)}>
               <div className='form-group'>
                 <label for="yourFirstName">Fist Name</label>
-                <input type="text" className={styles.fields+' form-control'} id="yourFirstName" placeholder="Enter your first name"/>
+                <input type="text" className={styles.fields+' form-control'} ref="yourFirstName" id="yourFirstName" placeholder="Enter your first name"/>
               </div>
               <div className={styles.fields+' form-group'}>
                 <label for="yourLastName">Last Name</label>
-                <input type="text" className={styles.fields+' form-control'} id="yourLastName" placeholder="Enter your last name"/>
+                <input type="text" className={styles.fields+' form-control'} ref="yourLastName" id="yourLastName" placeholder="Enter your last name"/>
               </div>
               <div className={styles.fields+' form-group'}>
                 <button type="submit" className='btn btn-primary'>
