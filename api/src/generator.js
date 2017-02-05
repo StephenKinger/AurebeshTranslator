@@ -1,6 +1,9 @@
 'use strict';
 
-var mymax = function(a, indexes) {
+var loadNames = require("./loadNames");
+
+var getIndexes = function(a) {
+    let indexes = [];
     var m = -Infinity, i = 0, n = a.length;
     for (; i != n; ++i) {
         if (a[i] > m) {
@@ -12,16 +15,15 @@ var mymax = function(a, indexes) {
           indexes.push(i);
         }
     }
-    console.log(indexes);
-    return m;
+    return indexes;
 }
 
-var generator = function(firstName, lastName) {
+var generator = function(firstName, lastName, category, gender) {
   // TODO : Decompose each name in letters
   let letter = firstName.split('');
   letter = letter.concat(lastName.split(''));
   // Read all Names existing in the database
-  let names = ["titi", "toto", "tutu"];
+  let names = loadNames.loadNames(category, gender);
   let scores = [0,0,0];
   // Score each name regarding inputs
   names.forEach(function(element, index) {
@@ -29,20 +31,18 @@ var generator = function(firstName, lastName) {
     letter.forEach(function(el) {
       var re = new RegExp(el, 'gi');
       let result =  element.match(re);
-      console.log(result);
       if (result !== null) {
           score += result.length;
       }
     })
     scores[index] = score;
-    console.log(score);
-    console.log(element);
   });
-  console.log(scores);
-  let indexes;
-  let bestResult = mymax(scores, indexes);
-  console.log(indexes);
-
+  let bestResults = getIndexes(scores);
+  let resultIndex = bestResults[0];
+  if (bestResults.length !== 1) {
+    resultIndex = bestResults[Math.floor(Math.random() * bestResults.length)];
+  }
+  console.log(names[resultIndex]);
 }
 
 generator("ttuut", "oooo");
