@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "NODE_ENV=dev webpack",
+    "test-api": "NODE_ENV=test nyc mocha api/test/setup.js api/test/*.spec.js --recursive",
     "test": "NODE_ENV=test nyc mocha test/.setup.js test/**/*.spec.js --recursive",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prod": "NODE_ENV=production webpack -p --config webpack.production.config.js ",
