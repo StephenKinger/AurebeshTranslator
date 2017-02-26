@@ -25,33 +25,42 @@ function reloadDatabase() {
 
   // once the connection is established we define our schemas
   db.once( 'open', function callback() {
-    //Character.collection.drop();
+    Character.collection.drop();
     var item = new Character({name:'Luke Skywalker'});
-    item.save();
-   
-    console.log("pring");
-    var fs = require('fs');
-    var mydocuments = fs.readFile('../datas/names.json', 'utf8', function (err, data) {
-      JSON.parse(data).forEach(function (entry){
-        console.log(entry.name);
-        Character.findOne({'name': entry.name}, function(err, person){
+    item.save(function(){
+      console.log("pring");
+      var fs = require('fs');
+      var mydocuments = fs.readFile('../datas/names.json', 'utf8', function (err, data) {
+        JSON.parse(data).forEach(function (entry){
+          console.log(entry.name);
+          Character.findOne({'name': entry.name}, function(err, person){
+            
+            if (person === null) {
+              console.log("Not found" + entry.name);
+              console.log('addind new'+entry.toString());
+              let item = new Character(entry);
+              item.save();
+            }
+            else {
+              console.log('Found '+ entry.name);
+              person.name = entry.name;
+              person.gender = entry.gender;
+              person.skin_color = entry.skin_color;
+              person.hair_color = entry.hair_color;
+              person.height = entry.height;
+              person.eye_color = entry.eye_color;
+              person.mass = entry.mass;
+              person.birth_year = entry.birth_year;
+              console.log('to be updated');
+              console.log(entry);
+              person.save();
+            }
+          });
           
-          if (person === null) {
-            console.log("Not found" + entry.name);
-            console.log('addind new'+entry.toString());
-            let item = new Character(entry);
-            item.save();
-          }
-          else {
-            console.log('Found '+ entry.name);
-            person.update(entry);
-            console.log('to be updated');
-            console.log(entry);
-            person.save();
-          }
         });
-        
-      });
+    });
+   
+    
     });  
     console.log("after");
   } );
