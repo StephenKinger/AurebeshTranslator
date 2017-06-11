@@ -7,6 +7,8 @@ import cx             from 'classnames';
 import shallowCompare from 'react-addons-shallow-compare';
 import { Link }       from 'react-router';
 
+import html2canvas from 'html2canvas';
+
 class Home extends Component {
 
   state = {
@@ -38,6 +40,29 @@ class Home extends Component {
     console.log("lastName:"+lastName);
   }
 
+  _handleGetImage(){
+//     html2canvas(this.refs.yourTranslation, {
+//     useCORS: true,
+//       onrendered: (canvas) => {
+//         var screenshot = canvas.toDataURL("image/png");
+//         document.getElementById("textScreenshot").setAttribute("src", screenshot);      
+//       }
+//     });
+
+    var textarea = this.refs.yourTranslation;
+    textarea.style.height = textarea.scrollHeight + "px";
+    html2canvas(textarea, {
+      onrendered: (canvas) => {
+        var screenshot = canvas.toDataURL("image/png");
+        document.getElementById("textScreenshot").setAttribute("src", screenshot);
+        // document.body.appendChild(canvas);
+        // textarea.style.height = "";
+      },
+      width: 1200,
+      height: textarea.offsetHeight
+    });
+  }
+
   _handleOnChange(e) {
     if (e) {
      e.preventDefault();
@@ -51,6 +76,7 @@ class Home extends Component {
     const { animated, viewEntersAnim } = this.state;
     const styles = require('./home.style.scss');
     console.log(styles.title);
+
     return(
       <div
         key="homeView"
@@ -82,7 +108,15 @@ class Home extends Component {
                 </form>
               </div>
           </div>
+          <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this._handleGetImage.bind(this)}>
+            <i className="fa fa-picture-o" aria-hidden="true"></i> Get Translation Image
+          </button>
           </p>
+          <div className={styles.iamcentered+' row'}>
+            <div className=" col-sm-12">
+           <img id="textScreenshot" src=""/>
+           </div>
+          </div>
         </Jumbotron>
       </div>
     );
