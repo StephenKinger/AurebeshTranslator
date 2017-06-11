@@ -13,7 +13,8 @@ class Home extends Component {
 
   state = {
     animated: true,
-    viewEntersAnim: true
+    viewEntersAnim: true,
+    imageGenerated: false
   };
 
   componentDidMount() {
@@ -40,28 +41,38 @@ class Home extends Component {
     console.log("lastName:"+lastName);
   }
 
-  _handleGetImage(){
-//     html2canvas(this.refs.yourTranslation, {
-//     useCORS: true,
-//       onrendered: (canvas) => {
-//         var screenshot = canvas.toDataURL("image/png");
-//         document.getElementById("textScreenshot").setAttribute("src", screenshot);      
-//       }
-//     });
-
+  _handleDownload(){
     var textarea = this.refs.yourTranslation;
     textarea.style.height = textarea.scrollHeight + "px";
+    var widthtouse = textarea.clientWidth;
+    console.log(widthtouse);
     html2canvas(textarea, {
       onrendered: (canvas) => {
         var screenshot = canvas.toDataURL("image/png");
         document.getElementById("textScreenshot").setAttribute("src", screenshot);
-        // document.body.appendChild(canvas);
-        // textarea.style.height = "";
+        //window.open(screenshot);
       },
-      width: 1200,
+      width: widthtouse,
       height: textarea.offsetHeight
     });
   }
+
+  _handleGetImage(){
+    var textarea = this.refs.yourTranslation;
+    textarea.style.height = textarea.scrollHeight + "px";
+    var widthtouse = textarea.clientWidth;
+    console.log(widthtouse);
+    html2canvas(textarea, {
+      onrendered: (canvas) => {
+        var screenshot = canvas.toDataURL("image/png");
+        document.getElementById("textScreenshot").setAttribute("src", screenshot);
+        //window.open(screenshot);
+      },
+      width: widthtouse,
+      height: textarea.offsetHeight
+    });
+  }
+
 
   _handleOnChange(e) {
     if (e) {
@@ -112,11 +123,18 @@ class Home extends Component {
             <i className="fa fa-picture-o" aria-hidden="true"></i> Get Translation Image
           </button>
           </p>
+          <p>
           <div className={styles.iamcentered+' row'}>
             <div className=" col-sm-12">
            <img id="textScreenshot" src=""/>
            </div>
           </div>
+          <div className={styles.iamcentered+' row'}>
+            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this._handleDownload.bind(this)}>
+              <i className="fa fa-download" aria-hidden="true"></i> Download Image
+            </button>
+          </div>
+        </p>
         </Jumbotron>
       </div>
     );
