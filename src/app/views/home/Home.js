@@ -38,6 +38,15 @@ class Home extends Component {
     console.log("lastName:"+lastName);
   }
 
+  _handleOnChange(e) {
+    if (e) {
+     e.preventDefault();
+    }
+    let textToTranslate = this.refs.yourText.value;
+    this.refs.yourTranslation.value = textToTranslate;
+    console.log("Text:"+textToTranslate);
+  }
+
   render() {
     const { animated, viewEntersAnim } = this.state;
     const styles = require('./home.style.scss');
@@ -51,26 +60,28 @@ class Home extends Component {
         })}>
         <Jumbotron>
           <h1 className={styles.title}>
-            Generate your Star Wars Name
+            Enter your text to translate
           </h1>
           <h1></h1>
           <p>
-            <form className={styles.inputs+' form-inline'} onSubmit={this._handleValidSubmit.bind(this)}>
-              <div className='form-group'>
-                <label for="yourFirstName">Fist Name</label>
-                <input type="text" className={styles.fields+' form-control'} ref="yourFirstName" id="yourFirstName" placeholder="Enter your first name"/>
+            <div className='row'>
+              <div className="col-sm-6">
+                <form className={styles.inputs} onSubmit={this._handleValidSubmit.bind(this)}>
+                  <div className='form-group'>
+                    <label for="textToTranslate">Text To Translate</label>
+                    <textarea type="text" rows="10" className={styles.fields+' form-control'} ref="yourText" id="yourText" placeholder="Enter your text to translate" onChange={this._handleOnChange.bind(this)}/>
+                  </div>
+                </form>
               </div>
-              <div className={styles.fields+' form-group'}>
-                <label for="yourLastName">Last Name</label>
-                <input type="text" className={styles.fields+' form-control'} ref="yourLastName" id="yourLastName" placeholder="Enter your last name"/>
+              <div className="col-sm-6">
+                <form className={styles.inputs}>
+                  <div className={styles.fields+' form-group'}>
+                    <label for="yourLastName">Text Translated in Aurebesh</label>
+                    <textarea readlonly type="text" rows="10" className={styles.fields+' '+styles.translated+' form-control'} ref="yourTranslation" id="yourTranslation" placeholder="Get your text translated"/>
+                  </div>
+                </form>
               </div>
-              <div className={styles.fields+' form-group'}>
-                <button type="submit" className='btn btn-primary'>
-                  <i className="fa fa-space-shuttle"></i>
-                  Generate
-                </button>
-              </div>
-            </form>
+          </div>
           </p>
         </Jumbotron>
       </div>

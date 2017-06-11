@@ -1,17 +1,11 @@
 {
-  "brand":      "Star Wars name Generator",
+  "brand":      "Aurebesh Translator",
   "leftLinks":  [],
   "rightLinks": [
     {
       "label":      "Home",
       "link":       "/",
       "view":       "home",
-      "isRouteBtn": true
-    },
-    {
-      "label":      "Components",
-      "link":       "/components",
-      "view":       "components",
       "isRouteBtn": true
     },
     {
