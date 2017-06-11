@@ -4,7 +4,7 @@ import { routerReducer }        from 'react-router-redux';
 import createLogger             from 'redux-logger';
 import thunkMiddleware          from 'redux-thunk';
 import * as reducers            from '../modules/reducers';
-import DevTools                 from '../devTools/DevTools.jsx';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 
 const loggerMiddleware = createLogger({
@@ -13,10 +13,9 @@ const loggerMiddleware = createLogger({
 });
 
 // createStore : enhancer
-const enhancer = compose(
+const enhancer = composeWithDevTools(
   applyMiddleware(thunkMiddleware, loggerMiddleware), // logger after thunk to avoid undefined actions
   persistState(getDebugSessionKey()),
-  DevTools.instrument()
 );
 
 function getDebugSessionKey() {
@@ -38,6 +37,6 @@ export default function configureStore(initialState) {
       store.replaceReducer(require('../modules/reducers').default)
     );
   }
- 
+
   return store;
 }

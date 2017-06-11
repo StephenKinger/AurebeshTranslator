@@ -6,8 +6,7 @@ import {
 import {
   App,
   ConnectedHome,
-  ConnectedAbout,
-  ConnectedComponents
+  ConnectedAbout
 }                               from '../containers';
 import {
   PageNotFound
@@ -17,7 +16,6 @@ const Routes = () => {
   return (
     <Route path="/" component={App} >
       <IndexRoute component={ConnectedHome} />
-      <Route path="/components" component={ConnectedComponents} />
       <Route path="/about" component={ConnectedAbout} />
       <Route path="*" component={PageNotFound} />
     </Route>
