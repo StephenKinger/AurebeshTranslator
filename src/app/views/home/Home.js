@@ -50,14 +50,39 @@ class Home extends Component {
       onrendered: (canvas) => {
         var screenshot = canvas.toDataURL("image/png");
         document.getElementById("textScreenshot").setAttribute("src", screenshot);
-        //window.open(screenshot);
+        // for non-IE
+        if (!window.ActiveXObject) {
+          var save = document.createElement('a');
+          save.href = screenshot;
+          save.target = '_blank';
+          save.download = 'Aurebesh Translation.png' || 'unknown';
+          var evt = new MouseEvent('click', {
+              'view': window,
+              'bubbles': true,
+              'cancelable': false
+          });
+          save.dispatchEvent(evt);
+          (window.URL || window.webkitURL).revokeObjectURL(save.href);
+        }
+
+        // for IE < 11
+        else if ( !! window.ActiveXObject && document.execCommand)     {
+            var _window = window.open(fileURL, '_blank');
+            _window.document.close();
+            _window.document.execCommand('SaveAs', true, fileName || fileURL)
+            _window.close();
+        }
       },
       width: widthtouse,
       height: textarea.offsetHeight
     });
+
+
+
   }
 
   _handleGetImage(){
+    const { generateImage } = this.props;
     var textarea = this.refs.yourTranslation;
     textarea.style.height = textarea.scrollHeight + "px";
     var widthtouse = textarea.clientWidth;
@@ -71,6 +96,7 @@ class Home extends Component {
       width: widthtouse,
       height: textarea.offsetHeight
     });
+    generateImage();
   }
 
 
@@ -124,16 +150,20 @@ class Home extends Component {
           </button>
           </p>
           <p>
+          {this.props.isImageGenerated &&
           <div className={styles.iamcentered+' row'}>
             <div className=" col-sm-12">
            <img id="textScreenshot" src=""/>
            </div>
           </div>
-          <div className={styles.iamcentered+' row'}>
-            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this._handleDownload.bind(this)}>
-              <i className="fa fa-download" aria-hidden="true"></i> Download Image
-            </button>
-          </div>
+          }
+          {this.props.isImageGenerated &&
+            <div className={styles.iamcentered+' row'}>
+              <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this._handleDownload.bind(this)}>
+                <i className="fa fa-download" aria-hidden="true"></i> Download Image
+              </button>
+            </div>
+          }
         </p>
         </Jumbotron>
       </div>
