@@ -14,7 +14,7 @@ class Home extends Component {
   state = {
     animated: true,
     viewEntersAnim: true,
-    isImageGenerated: false
+    isImageGenerated: false,
   };
 
   componentDidMount() {
@@ -46,14 +46,10 @@ class Home extends Component {
     textarea.style.height = textarea.scrollHeight + "px";
     var widthtouse = textarea.clientWidth;
     console.log(widthtouse);
-    html2canvas(textarea, {
-      onrendered: (canvas) => {
-        var screenshot = canvas.toDataURL("image/png");
-        document.getElementById("textScreenshot").setAttribute("src", screenshot);
         // for non-IE
         if (!window.ActiveXObject) {
           var save = document.createElement('a');
-          save.href = screenshot;
+          save.href = this.screenshot;
           save.target = '_blank';
           save.download = 'Aurebesh Translation.png' || 'unknown';
           var evt = new MouseEvent('click', {
@@ -72,13 +68,6 @@ class Home extends Component {
             _window.document.execCommand('SaveAs', true, fileName || fileURL)
             _window.close();
         }
-      },
-      width: widthtouse,
-      height: textarea.offsetHeight
-    });
-
-
-
   }
 
   _handleGetImage(){
@@ -90,6 +79,7 @@ class Home extends Component {
     html2canvas(textarea, {
       onrendered: (canvas) => {
         var screenshot = canvas.toDataURL("image/png");
+        this.screenshot = screenshot;
         document.getElementById("textScreenshot").setAttribute("src", screenshot);
         //window.open(screenshot);
       },
@@ -174,7 +164,8 @@ class Home extends Component {
 Home.propTypes= {
   currentView:  PropTypes.string.isRequired,
   enterHome:    PropTypes.func.isRequired,
-  leaveHome:    PropTypes.func.isRequired
+  leaveHome:    PropTypes.func.isRequired,
+  isImageGenerated: PropTypes.bool.isRequired
 };
 
 export default Home;
