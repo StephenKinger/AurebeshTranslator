@@ -14,7 +14,7 @@ class Home extends Component {
   state = {
     animated: true,
     viewEntersAnim: true,
-    imageGenerated: false
+    isImageGenerated: false
   };
 
   componentDidMount() {
